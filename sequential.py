@@ -1,4 +1,6 @@
 import math
+import tracemalloc
+import time
 
 def parse_point(point):
     coordinate_array = point.split(',')
@@ -32,5 +34,17 @@ def find_min_distance(n, m, points):
     
 
 if __name__ == "__main__":
-    result = find_min_distance(10, 10, ["1,3", "3,2", "6,8", "9,6", "5,5"])
-    print(result)
+    tracemalloc.start()
+    start_time = time.process_time()
+
+    result = find_min_distance(500, 500, ["41,127", "255,241", "411,163", "238,59", "63,127"])
+    
+    print("METHOD: sequential")
+
+    end_time = time.process_time()
+    print(f"Total runtime was {round(end_time - start_time, 5)}s")
+
+    current, peak = tracemalloc.get_traced_memory()
+    print(f"Current memory usage is {current / 10**6}MB. Peak was {peak / 10**6}")
+    tracemalloc.stop()
+    #print(result)
