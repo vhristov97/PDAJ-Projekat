@@ -2,6 +2,11 @@ import math
 import tracemalloc
 import time
 
+def generate_matrix(n, m):
+    for i in range(n):
+        for j in range(m):
+            yield i, j
+
 def parse_points(points):                                                   #parsira sve specijalne tacke u listu
     return [parse_point(point) for point in points] 
 
@@ -19,27 +24,29 @@ def find_closest_sp(i, j, points):                                          #pro
    all_distances = [calculate_distance(i, j, x, y) for x, y in points]
    return all_distances.index(min(all_distances))
 
+def generate_results(matrix, parsed_points):                                #wrapper za formiranje generatora
+    for i, j in matrix:
+        yield find_closest_sp(i, j, parsed_points) 
+
 def compute(n, m, points):
-    matrix = [(i,j) for i in range(n) for j in range(m)]                    #pakuje matricu u listu
+    matrix = generate_matrix(n, m)                                          #pakuje matricu u listu
     parsed_points = parse_points(points)
 
-    result = [find_closest_sp(i, j, parsed_points) for i, j in matrix]      #formira listu najblizih index-a
+    result = generate_results(matrix, parsed_points)
     return result
     
-
 if __name__ == "__main__":
     tracemalloc.start()
     start_time = time.process_time()
-    
+
     #result = compute(10, 10, ["1,3", "3,2", "6,8", "9,6", "5,5"])
     result = compute(500, 500, ["41,127", "255,241", "411,163", "238,59", "63,127"])
-    
-    print("METHOD: list comprehension")
+
+    print("METHOD: generators")
 
     end_time = time.process_time()
-    print(f"Total runtime was {round(end_time - start_time, 5)}s")
+    print(f"Total runtime was {round(end_time - start_time, 10)}s")
 
     current, peak = tracemalloc.get_traced_memory()
     print(f"Current memory usage is {current / 10**6}MB. Peak was {peak / 10**6}MB")
     tracemalloc.stop()
-    #print(result)
