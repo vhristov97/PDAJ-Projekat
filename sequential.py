@@ -37,6 +37,7 @@ if __name__ == "__main__":
     tracemalloc.start()
     start_time = time.process_time()
 
+    #result = compute(10, 10, ["1,3", "3,2", "6,8", "9,6", "5,5"])
     result = find_min_distance(500, 500, ["41,127", "255,241", "411,163", "238,59", "63,127"])
     
     print("METHOD: sequential")
@@ -45,6 +46,5 @@ if __name__ == "__main__":
     print(f"Total runtime was {round(end_time - start_time, 5)}s")
 
     current, peak = tracemalloc.get_traced_memory()
-    print(f"Current memory usage is {current / 10**6}MB. Peak was {peak / 10**6}")
+    print(f"Current memory usage is {current / 10**6}MB. Peak was {peak / 10**6}MB")
     tracemalloc.stop()
-    #print(result)
