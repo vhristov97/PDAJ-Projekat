@@ -6,12 +6,10 @@ import sys
 import json
 from django.views.decorators.csrf import csrf_exempt
 
-sys.path.append('/home/vladimir/Desktop/PDAJ/PDAJ-Projekat/scripts')
-
-from sequential import find_min_distance as sequential_compute
-from list_comprehension import compute as comprehension_compute
-from generators import compute as generator_compute
-from mprocessing import compute as mprocessing_compute
+from .scripts.sequential import find_min_distance as sequential_compute
+from .scripts.list_comprehension import compute as comprehension_compute
+from .scripts.generators import compute as generator_compute
+from .scripts.mprocessing import compute as mprocessing_compute
 
 # Create your views here.
 @csrf_exempt
